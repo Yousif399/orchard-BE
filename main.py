@@ -236,7 +236,7 @@ def log_in():
     username = os.environ.get('USERNAME')
     password = os.environ.get('PASSWORD')
 
-    data = request.json
+    data = request.form
     print(data)
    
 
