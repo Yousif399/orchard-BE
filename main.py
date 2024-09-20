@@ -242,8 +242,6 @@ def log_in():
 
     fe_username = data['name']
     fe_password = data['password']
-    print(f"REAL User name {username}, password:  {password}")
-    print(f"User name {fe_username}, password:  {fe_password}")
     if username == fe_username and password == fe_password:
         access_token = create_access_token(identity=username)
         
@@ -255,7 +253,7 @@ def log_in():
             "Token": access_token
         }), 200
     else:
-        print("wrong user", type(username, fe_username))
+        print("wrong user")
         return jsonify({
             "Status": 401,
             "Message": "User Not Found"
