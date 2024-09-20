@@ -242,7 +242,7 @@ def log_in():
         fe_password = request.form['password']
         # print(f"FE: {fe_password} {fe_username}, BE: {username} {password}")
         # print(username == fe_username and password == fe_password)
-        if fe_username == 'y':
+        if username == fe_username:
             access_token = create_access_token(identity=username)
 
             print(access_token)
