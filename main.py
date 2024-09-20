@@ -255,7 +255,7 @@ def log_in():
             "Token": access_token
         }), 200
     else:
-        print("wrong user")
+        print("wrong user", type(username, fe_username))
         return jsonify({
             "Status": 401,
             "Message": "User Not Found"
