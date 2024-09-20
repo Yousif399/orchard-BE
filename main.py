@@ -237,31 +237,24 @@ def log_in():
 
     data = request.form
     print(data)
-    print(username, password)
 
     if request.method == "POST":
         fe_username = request.form['name']
         fe_password = request.form['password']
-        print(fe_username == username)
-        print(username == fe_username)
+        if username == fe_username and password == fe_password:
+            access_token = create_access_token(identity=username)
 
-        print("__________")
-
-        print(fe_password == password)
-        print(password == fe_password)
-
-        if fe_username == "joseph" and fe_password == password:
-            print('working')
+            print(access_token)
             return jsonify({
                 "Status": 200,
                 "Message": "Log-In Went Successfully",
-                "Token": 'access_token'
+                "Token": access_token
             }), 200
-
+    else:
+        print("wrong user")
         return jsonify({
             "Status": 401,
-            "Message": "Log-In Went Successfully",
-            "Token": 'access_token'
+            "Message": "User Not Found"
         }), 401
 
     return jsonify({"Message": "Should go back to log-in "})
@@ -289,19 +282,3 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
     app.run(debug=True)
-
-    # if username == fe_username and password == fe_password:
-    #     access_token = create_access_token(identity=username)
-
-    #     print(access_token)
-    #     return jsonify({
-    #         "Status": 200,
-    #         "Message": "Log-In Went Successfully",
-    #         "Token": access_token
-    #     }), 200
-    # else:
-    #     print("wrong user")
-    #     return jsonify({
-    #         "Status": 401,
-    #         "Message": "User Not Found"
-    #     }), 401
