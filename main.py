@@ -102,7 +102,6 @@ def add_staff():
         public_id_cloud = upload_result['public_id']
         new_img_url = upload_result['secure_url']
 
-
         staff = Staff(
             name=fe_name,
             job_title=fe_job_title,
@@ -110,7 +109,6 @@ def add_staff():
             img=new_img_url,
             public_id=public_id_cloud
         )
-
 
         try:
             db.session.add(staff)
@@ -160,7 +158,6 @@ def update_staff(id):
     if file:
         delete_old_img = cloudinary.api.delete_resources(
             public_id, resources_type="image", type="upload")
-
 
         new_img_uploader = cloudinary.uploader.upload(file)
         new_public_id = new_img_uploader['public_id']
@@ -238,26 +235,26 @@ def log_in():
 
     data = request.form
     print(data)
-   
 
-    fe_username = data['name']
-    fe_password = data['password']
-    if username == fe_username and password == fe_password:
-        access_token = create_access_token(identity=username)
-        
+    if request.method == "POST":
+        fe_username = data['name']
+        fe_password = data['password']
+        if username == fe_username and password == fe_password:
+            access_token = create_access_token(identity=username)
 
-        print(access_token)
-        return jsonify({
-            "Status": 200,
-            "Message": "Log-In Went Successfully",
-            "Token": access_token
-        }), 200
-    else:
-        print("wrong user")
-        return jsonify({
-            "Status": 401,
-            "Message": "User Not Found"
-        }), 401
+            print(access_token)
+            return jsonify({
+                "Status": 200,
+                "Message": "Log-In Went Successfully",
+                "Token": access_token
+            }), 200
+        else:
+            print("wrong user")
+            return jsonify({
+                "Status": 401,
+                "Message": "User Not Found"
+            }), 401
+    return jsonify({"Message": "Should go back to log-in "})
 
 
 @app.route("/authenticated", methods=["GET"])
