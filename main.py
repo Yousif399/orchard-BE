@@ -237,10 +237,10 @@ def log_in():
     print(data)
 
     if request.method == "POST":
-        print(f"FE: {fe_password} {fe_username}, BE: {username} {password}")
-        print(username == fe_username and password == fe_password)
         fe_username = data['name']
         fe_password = data['password']
+        print(f"FE: {fe_password} {fe_username}, BE: {username} {password}")
+        print(username == fe_username and password == fe_password)
         if username == fe_username and password == fe_password:
             access_token = create_access_token(identity=username)
 
