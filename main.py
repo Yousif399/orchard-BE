@@ -232,7 +232,6 @@ username = os.environ.get('USERNAME')
 password = os.environ.get('PASSWORD')
 
 
-
 @app.route('/login', methods=["POST"])
 def log_in():
 
@@ -243,14 +242,22 @@ def log_in():
     if request.method == "POST":
         fe_username = request.form['name']
         fe_password = request.form['password']
-        if fe_username == os.environ.get('USERNAME'):
+        print(fe_username == username)
+        print(username=fe_username)
+
+        print("__________")
+
+        print(fe_password == password)
+        print(password == fe_password)
+        
+        if fe_username == "joseph" and fe_password == password:
             print('working')
             return jsonify({
                 "Status": 200,
                 "Message": "Log-In Went Successfully",
                 "Token": 'access_token'
             }), 200
-        
+
         return jsonify({
             "Status": 401,
             "Message": "Log-In Went Successfully",
