@@ -243,13 +243,13 @@ def log_in():
         fe_username = request.form['name']
         fe_password = request.form['password']
         print(fe_username == username)
-        print(username=fe_username)
+        print(username == fe_username)
 
         print("__________")
 
         print(fe_password == password)
         print(password == fe_password)
-        
+
         if fe_username == "joseph" and fe_password == password:
             print('working')
             return jsonify({
