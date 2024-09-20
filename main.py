@@ -231,6 +231,8 @@ def delete_staff(id):
 username = os.environ.get('USERNAME')
 password = os.environ.get('PASSWORD')
 
+
+
 @app.route('/login', methods=["POST"])
 def log_in():
 
@@ -241,23 +243,20 @@ def log_in():
     if request.method == "POST":
         fe_username = request.form['name']
         fe_password = request.form['password']
-        # print(f"FE: {fe_password} {fe_username}, BE: {username} {password}")
-        # print(username == fe_username and password == fe_password)
-        if username == fe_username and password == fe_password:
-            access_token = create_access_token(identity=username)
-
-            print(access_token)
+        if fe_username == os.environ.get('USERNAME'):
+            print('working')
             return jsonify({
                 "Status": 200,
                 "Message": "Log-In Went Successfully",
-                "Token": access_token
+                "Token": 'access_token'
             }), 200
-        else:
-            print("wrong user")
-            return jsonify({
-                "Status": 401,
-                "Message": "User Not Found"
-            }), 401
+        
+        return jsonify({
+            "Status": 401,
+            "Message": "Log-In Went Successfully",
+            "Token": 'access_token'
+        }), 401
+
     return jsonify({"Message": "Should go back to log-in "})
 
 
@@ -283,3 +282,19 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
     app.run(debug=True)
+
+    # if username == fe_username and password == fe_password:
+    #     access_token = create_access_token(identity=username)
+
+    #     print(access_token)
+    #     return jsonify({
+    #         "Status": 200,
+    #         "Message": "Log-In Went Successfully",
+    #         "Token": access_token
+    #     }), 200
+    # else:
+    #     print("wrong user")
+    #     return jsonify({
+    #         "Status": 401,
+    #         "Message": "User Not Found"
+    #     }), 401
