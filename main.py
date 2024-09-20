@@ -235,10 +235,11 @@ def log_in():
 
     data = request.form
     print(data)
+    print(request.method)
 
     if request.method == "POST":
-        fe_username = data['name']
-        fe_password = data['password']
+        fe_username = request.form['name']
+        fe_password = request.form['password']
         print(f"FE: {fe_password} {fe_username}, BE: {username} {password}")
         print(username == fe_username and password == fe_password)
         if username == fe_username and password == fe_password:
