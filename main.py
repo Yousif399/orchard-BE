@@ -237,6 +237,8 @@ def log_in():
     print(data)
 
     if request.method == "POST":
+        print(f"FE: {fe_password} {fe_username}, BE: {username} {password}")
+        print(username == fe_username and password == fe_password)
         fe_username = data['name']
         fe_password = data['password']
         if username == fe_username and password == fe_password:
