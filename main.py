@@ -228,21 +228,22 @@ def delete_staff(id):
         }), 500
 
 
+username = os.environ.get('USERNAME')
+password = os.environ.get('PASSWORD')
+
 @app.route('/login', methods=["POST"])
 def log_in():
-    username = os.environ.get('USERNAME')
-    password = os.environ.get('PASSWORD')
 
     data = request.form
     print(data)
-    print(request.method)
+    print(username, password)
 
     if request.method == "POST":
         fe_username = request.form['name']
         fe_password = request.form['password']
         # print(f"FE: {fe_password} {fe_username}, BE: {username} {password}")
         # print(username == fe_username and password == fe_password)
-        if username == fe_username:
+        if username == fe_username and password == fe_password:
             access_token = create_access_token(identity=username)
 
             print(access_token)
