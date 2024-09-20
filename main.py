@@ -237,11 +237,12 @@ def log_in():
     password = os.environ.get('PASSWORD')
 
     data = request.json
+    print(data)
    
 
     fe_username = data['name']
     fe_password = data['password']
-
+    print(f"User name {fe_username}, password:  {fe_password}")
     if username == fe_username and password == fe_password:
         access_token = create_access_token(identity=username)
         
