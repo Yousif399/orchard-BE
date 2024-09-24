@@ -248,7 +248,7 @@ def log_in():
         fe_username = request.form['name']
         fe_password = request.form['password']
         if username == fe_username and password == fe_password:
-            access_token = create_access_token(identity=username, expires_delta=timedelta(minutes=1))
+            access_token = create_access_token(identity=username, expires_delta=timedelta(hours=1))
 
             # print(access_token)
             return jsonify({
