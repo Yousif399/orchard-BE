@@ -5,8 +5,8 @@ from werkzeug.utils import secure_filename
 import os
 import cloudinary.uploader
 import cloudinary.api
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_jwt
+from datetime import timedelta
 
 # Create blog
 @app.route("/create-blog", methods=["POST"])
@@ -28,11 +28,13 @@ def create_blog():
         try:
             db.session.add(blog)
             db.session.commit()
+            print('Adding Blog ......')
             return jsonify({
                 "Status": 200,
                 "Message": "Blog Was Created Successfully"
             }), 200
         except Exception as e:
+            print('Couldn\'t Add Blog ......')
             return jsonify({
                 "Status": 400 or 401,
                 "Message": f" Couldn't Create Blog Something Went Wrong {str(e)} "
@@ -73,6 +75,7 @@ def delete_blog(id):
     try:
         db.session.delete(blog)
         db.session.commit()
+        print('Deleting Blog..... ')
         return jsonify({
             "Status": 200,
             "Message": "Blog Was Deleted Successfully"
@@ -113,11 +116,13 @@ def add_staff():
         try:
             db.session.add(staff)
             db.session.commit()
+            print('Adding Staff')
             return jsonify({
                 "Status": 200,
                 "Message": "Staff Has Been Added Successfully"
             }), 200
         except Exception as e:
+            print('Couldn\'t Add Staff')
             return jsonify({
                 "Status": 400,
                 "Message": "Couldn't Add Staff Something Went Wrong Try Again ",
@@ -213,7 +218,8 @@ def delete_staff(id):
     try:
         delete_img_from_cloud = cloudinary.api.delete_resources(
             public_id, resources_type="image", type="upload")
-        print(f"Deleting img from cloud {delete_img_from_cloud}")
+        # print(f"Deleting img from cloud {delete_img_from_cloud}")
+        print('Deleting Staff ...')
         db.session.delete(staff)
         db.session.commit()
         return jsonify({
@@ -236,15 +242,15 @@ password = os.environ.get('PASSWORD')
 def log_in():
 
     data = request.form
-    print(data)
+    print('Logging in')
 
     if request.method == "POST":
         fe_username = request.form['name']
         fe_password = request.form['password']
         if username == fe_username and password == fe_password:
-            access_token = create_access_token(identity=username)
+            access_token = create_access_token(identity=username, expires_delta=timedelta(minutes=1))
 
-            print(access_token)
+            # print(access_token)
             return jsonify({
                 "Status": 200,
                 "Message": "Log-In Went Successfully",
@@ -265,7 +271,7 @@ def log_in():
 def authenticated():
     current_user = get_jwt_identity()
     if current_user:
-        print(f"Current User is: {current_user}")
+        print(f"Current User is Authenticated: {current_user}")
         return jsonify({
             "Status": 200,
             "Message": f"User is Authenticated: {current_user}"
